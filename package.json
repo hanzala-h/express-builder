@@ -4,6 +4,10 @@
   "displayName": "Express Builder",
   "description": "",
   "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hanzala-h/express-builder.git"
+  },
   "engines": {
     "vscode": "^1.91.0"
   },
