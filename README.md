@@ -9,8 +9,6 @@ ExpressBuilder helps you kickstart your Express.js projects with ease. It create
 - **TailwindCSS Integration**: Includes TailwindCSS setup for easy styling.
 - **Automated npm Initialization**: Initializes npm and installs necessary dependencies.
 
-> Tip: Visualize the features of your extension with short, focused animations for better user engagement.
-
 ## Requirements
 
 - **Node.js**: Ensure you have Node.js installed. You can download it from [here](https://nodejs.org/).
