@@ -1,3 +1,4 @@
+import { randomInt } from 'crypto';
 const fs = require('fs');
 const path = require('path');
 const { exec } = require('child_process');
@@ -18,9 +19,10 @@ function activate(context) {
 
 		const root = folder[0].fsPath;
 
-		const appData = `const express = require('express');
+		const appJS = `const express = require('express');
 
 const dbgr = require('debug')('development:app');
+const db = require('./config/mongoose-connection');
 
 const app = express();
 
@@ -37,11 +39,39 @@ app.listen(3000, function () {
 @tailwind components;
 @tailwind utilities;`;
 
+		const mongooseConnectionJS = `
+const mongoose = require('mongoose');
+const config = require('config');
+const dbgr = require('debug')('development:mongoose');
+
+const dbUri = config.get('mongoURI');
+const dbName = config.get('database');
+
+mongoose.connect(\`\${dbUri}/\${dbName}\`, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+.then(() => {
+  dbgr('MongoDB connected successfully!');
+})
+.catch(err => {
+  dbgr(\`MongoDB connection error: \${err}\`);
+});
+
+module.exports = mongoose.Connection;
+`;
+		const n = randomInt(10000);
+
+		const developmentJSON = `{
+	"mongoURI": "mongodb://127.0.0.1:27017",
+	"database": "database${n}"
+}`;
+
 		const struct = ['config', 'controllers', 'middlewares', 'models', 'public', 'routes', 'utils', 'views', 'app.js'];
 
 		struct.forEach(s => {
 			if (s === 'app.js') {
-				fs.writeFile(path.join(root, s), appData, err => {
+				fs.writeFile(path.join(root, s), appJS, err => {
 					if (err) {
 						vscode.window.showErrorMessage(`Error writing file ${s}: ${err.message}`);
 					}
@@ -51,6 +81,19 @@ app.listen(3000, function () {
 					if (err) {
 						vscode.window.showErrorMessage(`Error creating directory ${s}: ${err.message}`);
 					} else {
+
+						if (s === 'config') {
+							const configFiles = ['development.json', 'mongoose-connection.js'];
+
+							configFiles.forEach((file, idx) => {
+								let data = idx === 0 ? mongooseConnectionJS : developmentJSON;
+								fs.writeFile(path.join(root, s, file), data, err => {
+									if (err) {
+										vscode.window.showErrorMessage(`Error creating file ${file} in ${s}: ${err.message}`);
+									}
+								});
+							});
+						}
 
 						if (s === 'public') {
 							const publicDirs = ['images', 'stylesheets', 'javascripts'];
