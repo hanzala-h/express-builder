@@ -24,6 +24,14 @@ No known issues at the moment. Please report any issues on the [GitHub issues pa
 
 ## Release Notes
 
+### 1.0.1.1
+
+- Updated Readme
+
+### 1.0.1
+
+- Added configurations for the mongoDB connection
+
 ### 1.0.0
 
 - Initial release of ExpressBuilder.
