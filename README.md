@@ -24,7 +24,7 @@ No known issues at the moment. Please report any issues on the [GitHub issues pa
 
 ## Release Notes
 
-### 1.0.1.1
+### 1.0.2
 
 - Updated Readme
 
