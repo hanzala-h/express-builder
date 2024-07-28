@@ -1,4 +1,4 @@
-import { randomInt } from 'crypto';
+const { randomInt } = require('crypto');
 const fs = require('fs');
 const path = require('path');
 const { exec } = require('child_process');
@@ -39,8 +39,7 @@ app.listen(3000, function () {
 @tailwind components;
 @tailwind utilities;`;
 
-		const mongooseConnectionJS = `
-const mongoose = require('mongoose');
+		const mongooseConnectionJS = `const mongoose = require('mongoose');
 const config = require('config');
 const dbgr = require('debug')('development:mongoose');
 
@@ -86,7 +85,7 @@ module.exports = mongoose.Connection;
 							const configFiles = ['development.json', 'mongoose-connection.js'];
 
 							configFiles.forEach((file, idx) => {
-								let data = idx === 0 ? mongooseConnectionJS : developmentJSON;
+								let data = idx === 1 ? mongooseConnectionJS : developmentJSON;
 								fs.writeFile(path.join(root, s, file), data, err => {
 									if (err) {
 										vscode.window.showErrorMessage(`Error creating file ${file} in ${s}: ${err.message}`);
