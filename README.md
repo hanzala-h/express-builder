@@ -24,6 +24,10 @@ No known issues at the moment. Please report any issues on the [GitHub issues pa
 
 ## Release Notes
 
+### 1.0.3
+
+- Solved Some issues
+
 ### 1.0.2
 
 - Updated Readme
